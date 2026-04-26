@@ -1,11 +1,73 @@
 #include <iostream>
-#include "mathlib.h"
 using namespace std;
+
+class StudyPlanner {
+private:
+    string subject;
+    int hours;
+    int priority;
+
+public:
+    StudyPlanner() {
+        subject = "None";
+        hours = 0;
+        priority = 0;
+    }
+
+    StudyPlanner(string s, int h, int p) {
+        subject = s;
+        hours = h;
+        priority = p;
+    }
+
+    void setTask() {
+        subject = "General";
+        hours = 2;
+        priority = 1;
+    }
+
+    void setTask(string s) {
+        subject = s;
+    }
+
+    void setTask(string s, int h) {
+        subject = s;
+        hours = h;
+    }
+
+    void setTask(string s, int h, int p) {
+        subject = s;
+        hours = h;
+        priority = p;
+    }
+
+    StudyPlanner operator+(const StudyPlanner& sp) {
+        return StudyPlanner(subject + "&" + sp.subject, hours + sp.hours, priority + sp.priority);
+    }
+
+    StudyPlanner operator-(const StudyPlanner& sp) {
+        return StudyPlanner(subject, hours - sp.hours, priority);
+    }
+
+    bool operator==(const StudyPlanner& sp) {
+        return hours == sp.hours;
+    }
+
+    bool operator<(const StudyPlanner& sp) {
+        return priority < sp.priority;
+    }
+
+    friend ostream& operator<<(ostream& out, const StudyPlanner& sp) {
+        out << "Subject: " << sp.subject
+            << ", Hours: " << sp.hours
+            << ", Priority: " << sp.priority << endl;
+        return out;
+    }
+};
 
 int main() {
 
     string s1, s2;
-
     int h1, h2, p1, p2;
 
     cout << "Enter Subject 1: ";
@@ -30,8 +92,6 @@ int main() {
 
     StudyPlanner task2(s2, h2, p2);
 
-    cout << "\n--- FUNCTION OVERLOADING ---\n";
-
     StudyPlanner task3;
     task3.setTask();
     cout << task3;
@@ -48,22 +108,20 @@ int main() {
     cout << "\n--- OPERATOR OVERLOADING ---\n";
 
     StudyPlanner task4 = task1 + task2;
-    cout << "Addition (+): " << task4;
+    cout << task4;
 
     StudyPlanner task5 = task1 - task2;
-    cout << "Subtraction (-): " << task5;
+    cout << task5;
 
-    cout << "task1 == task2: ";
     if (task1 == task2)
-        cout << "True\n";
+        cout << "Same study hours\n";
     else
-        cout << "False\n";
+        cout << "Different study hours\n";
 
-    cout << "task1 < task2: ";
     if (task1 < task2)
-        cout << "True\n";
+        cout << "Task1 has lower priority\n";
     else
-        cout << "False\n";
+        cout << "Task1 has higher or equal priority\n";
 
     cout << "\n--- ORIGINAL OBJECTS ---\n";
     cout << task1;
