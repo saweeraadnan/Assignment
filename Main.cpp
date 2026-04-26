@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 class StudyPlanner {
@@ -42,11 +43,15 @@ public:
     }
 
     StudyPlanner operator+(const StudyPlanner& sp) {
-        return StudyPlanner(subject + "&" + sp.subject, hours + sp.hours, priority + sp.priority);
+        return StudyPlanner(subject + "&" + sp.subject,
+            hours + sp.hours,
+            priority + sp.priority);
     }
 
     StudyPlanner operator-(const StudyPlanner& sp) {
-        return StudyPlanner(subject, hours - sp.hours, priority);
+        return StudyPlanner(subject,
+            hours - sp.hours,
+            priority);
     }
 
     bool operator==(const StudyPlanner& sp) {
